@@ -81,7 +81,7 @@ func main() {
 	cache.Set("third", "value3", ttlcache.DefaultTTL)
 
 	// retrieve data
-	item := cache.Get("first")
+	item, _ := cache.Get("first")
 	fmt.Println(item.Value(), item.ExpiresAt())
 
 	// delete data
@@ -122,16 +122,19 @@ existing implementation of `ttlcache.Loader` can be used:
 ```go
 func main() {
 	loader := ttlcache.LoaderFunc[string, string](
-		func(c *ttlcache.Cache[string, string], key string) *ttlcache.Item[string, string] {
+		func(c *ttlcache.Cache[string, string], key string) (*ttlcache.Item[string, string], error) {
 			// load from file/make an HTTP request
+			if err != nil {
+				return nil, err
+			}
 			item := c.Set("key from file", "value from file")
-			return item
+			return item, nil
 		},
 	)
 	cache := ttlcache.New[string, string](
 		ttlcache.WithLoader[string, string](loader),
 	)
 
-	item := cache.Get("key from file")
+	item, err := cache.Get("key from file")
 }
 ```
