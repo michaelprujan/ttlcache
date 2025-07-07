@@ -1,4 +1,4 @@
-module github.com/lafriks/ttlcache/v3
+module github.com/michaelprujan/ttlcache/v3
 
 go 1.18
 

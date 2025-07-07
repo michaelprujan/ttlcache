@@ -77,3 +77,7 @@ func WithDisableOverwriteOnSet[K comparable, V any]() Option[K, V] {
 		opts.disableOverwriteOnSet = true
 	})
 }
+
+func GetDisableTouchOnHit[K comparable, V any](opts *options[K, V]) bool {
+	return opts.disableTouchOnHit
+}
